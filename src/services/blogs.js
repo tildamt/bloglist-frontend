@@ -19,7 +19,7 @@ const create = async (newObject) => {
 
   const response = await axios.post(baseUrl, newObject, config)
   return response.data
-  
+
 }
 
 const like = async (id, newObject) => {

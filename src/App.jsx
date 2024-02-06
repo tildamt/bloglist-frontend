@@ -19,7 +19,7 @@ const App = () => {
   useEffect(() => {
     blogService.getAll().then(blogs =>
       setBlogs( blogs )
-    )  
+    )
   }, [])
 
   useEffect(() => {
@@ -32,7 +32,7 @@ const App = () => {
   }, [])
 
   useEffect(() => {
-    userService.getAll().then(users => 
+    userService.getAll().then(users =>
       setUsers( users ))
   }, [])
 
@@ -71,7 +71,7 @@ const App = () => {
   const handleUsernameChange = (event) => {
     setUsername(event.target.value)
   }
-  
+
   const handlePasswordChange = (event) => {
     setPassword(event.target.value)
   }
@@ -95,7 +95,7 @@ const App = () => {
 
   const likeBlog = id => {
     const blog = blogs.find(n => n.id === id)
-    const changedBlog = { ...blog, likes: blog.likes + 1}
+    const changedBlog = { ...blog, likes: blog.likes + 1 }
 
     blogService
       .like(id, changedBlog)
@@ -119,9 +119,9 @@ const App = () => {
       <div>
         <h2>Log in to application</h2>
         <Notification message={errorMessage}/>
-      <LoginForm username={username} password={password}
-      handleUsernameChange={handleUsernameChange} handlePasswordChange={handlePasswordChange}
-      handleLogin={handleLogin}/>
+        <LoginForm username={username} password={password}
+          handleUsernameChange={handleUsernameChange} handlePasswordChange={handlePasswordChange}
+          handleLogin={handleLogin}/>
       </div>
     )
   }
@@ -137,14 +137,14 @@ const App = () => {
       <h2>blogs</h2>
 
       <Notification message={errorMessage}/>
-        <div>
-          {blogForm()}
-        </div>
+      <div>
+        {blogForm()}
+      </div>
       {blogs
         .sort((a, b) => b.likes - a.likes)
         .map(blog =>
-        <Blog key={blog.id} blog={blog} user={currentUser} likeBlog={likeBlog} deleteBlog={deleteBlog}/>
-      )}
+          <Blog key={blog.id} blog={blog} user={currentUser} likeBlog={likeBlog} deleteBlog={deleteBlog}/>
+        )}
     </div>
   )
 }
