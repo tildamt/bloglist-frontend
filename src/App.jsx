@@ -93,6 +93,17 @@ const App = () => {
     </Togglable>
   )
 
+  const likeBlog = id => {
+    const blog = blogs.find(n => n.id === id)
+    const changedBlog = { ...blog, likes: blog.likes + 1}
+
+    blogService
+      .like(id, changedBlog)
+      .then(returnedBlog => {
+        setBlogs(blogs.map(blog => blog.id !== id ? blog : returnedBlog))
+      })
+  }
+
   if (user === null) {
     return (
       <div>
@@ -120,7 +131,7 @@ const App = () => {
           {blogForm()}
         </div>
       {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} user={currentUser} />
+        <Blog key={blog.id} blog={blog} user={currentUser} likeBlog={likeBlog} />
       )}
     </div>
   )
