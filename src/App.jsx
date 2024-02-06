@@ -104,6 +104,16 @@ const App = () => {
       })
   }
 
+  const deleteBlog = id => {
+    const blogToDelete = blogs.find(b => b.id === id)
+    if (window.confirm(`Do you want to delete ${blogToDelete.title} by ${blogToDelete.author}?`))
+      blogService
+        .remove(id)
+        .then(() => {
+          setBlogs(blogs.filter(b => b.id !== id))
+        })
+  }
+
   if (user === null) {
     return (
       <div>
@@ -133,7 +143,7 @@ const App = () => {
       {blogs
         .sort((a, b) => b.likes - a.likes)
         .map(blog =>
-        <Blog key={blog.id} blog={blog} user={currentUser} likeBlog={likeBlog} />
+        <Blog key={blog.id} blog={blog} user={currentUser} likeBlog={likeBlog} deleteBlog={deleteBlog}/>
       )}
     </div>
   )
