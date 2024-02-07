@@ -31,6 +31,7 @@ describe('Blog app', function() {
 
     describe('When logged in', function() {
       beforeEach(function() {
+        //cy.request('POST', 'http://localhost:3003/api/testing/reset')
         cy.get('#username').type('mluukkai')
         cy.get('#password').type('salainen')
         cy.get('#login-button').click()
@@ -46,11 +47,23 @@ describe('Blog app', function() {
         cy.contains('blog')
       })
 
-      it.only('A blog can be liked', function() {
+      it('A blog can be liked', function() {
         cy.get('#view-button').click()
         cy.get('#like-button').click()
         cy.contains('likes: 3')
 
+      })
+
+      it.only('A blog can be deleted', function() {
+        cy.contains('new blog').click()
+        cy.get('#title').type('testiblogi1')
+        cy.get('#author').type('author')
+        cy.get('#url').type('url')
+        cy.get('#create-button').click()
+
+        cy.get('#view-button').click()
+        cy.get('#delete-button').click()
+        cy.contains('testiblogi1').should('not-exist')
       })
     })
   })
