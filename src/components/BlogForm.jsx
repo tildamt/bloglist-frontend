@@ -40,18 +40,21 @@ const BlogForm = ( { createBlog, currentUser/*addBlog, author, title, url, handl
       <form onSubmit={addBlog}>
         <div>
           title: <input
+            placeholder='enter title'
             value={title}
             onChange={handleTitleChange}
           />
         </div>
         <div>
           author: <input
+            placeholder='enter author'
             value={author}
             onChange={handleAuthorChange}
           />
         </div>
         <div>
           url: <input
+            placeholder='enter url'
             value={url}
             onChange={handleUrlChange}
           />
