@@ -54,7 +54,7 @@ describe('Blog app', function() {
 
       })
 
-      it.only('A blog can be deleted', function() {
+      it('A blog can be deleted', function() {
         cy.contains('new blog').click()
         cy.get('#title').type('testiblogi1')
         cy.get('#author').type('author')
@@ -66,6 +66,38 @@ describe('Blog app', function() {
         cy.contains('testiblogi1').should('not-exist')
       })
     })
+
+    describe('Blog deletion', function() {
+      beforeEach(function() {
+        
+        cy.get('#username').type('mluukkai')
+        cy.get('#password').type('salainen')
+        cy.get('#login-button').click()
+      });
+    
+      it('User who added a blog can see delete button', function() {
+  
+        cy.contains('testiblogi1').click()
+
+      })
+    
+      it.only('Other users cannot see delete button for blogs added by different users', function() {
+        cy.contains('logout').click()
+    
+        cy.request('POST', 'http://localhost:3003/api/users', {
+          username: 'user2',
+          name: 'User Two',
+          password: 'password'
+        })
+    
+        cy.get('#username').type('user2')
+        cy.get('#password').type('password')
+        cy.get('#login-button').click()
+    
+        cy.contains('Test Blog').parent().should('not.contain', '#delete-button')
+      })
+    })
+    
   })
 
 })
