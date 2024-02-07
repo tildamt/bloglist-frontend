@@ -1,6 +1,7 @@
 describe('Blog app', function() {
   beforeEach(function() {
     //cy.request('POST', 'http://localhost:3003/api/testing/reset')
+
     cy.visit('http://localhost:5173')
   })
 
@@ -17,7 +18,7 @@ describe('Blog app', function() {
       cy.get('#password').type('salainen')
       cy.get('#login-button').click()
 
-      cy.contains('tildatoi is logged in')
+      cy.contains('mluukkai is logged in')
     })
 
     it('fails with wrong credentials', function() {
@@ -65,8 +66,39 @@ describe('Blog app', function() {
         cy.get('#delete-button').click()
         cy.contains('testiblogi1').should('not-exist')
       })
+
     })
 
+    describe('Ordering blog', function() {
+      it.only('Blogs ordered by likes', function() {
+        //cy.request('POST', 'http://localhost:3003/api/testing/reset')
+
+        cy.get('#username').type('mluukkai')
+        cy.get('#password').type('salainen')
+        cy.get('#login-button').click()
+
+        cy.contains('new blog').click()
+        cy.get('#title').type('The blog with the most likes')
+        cy.get('#author').type('author')
+        cy.get('#url').type('url')
+        cy.get('#create-button').click()
+
+        cy.contains('new blog').click()
+        cy.get('#title').type('The blog with the second most likes')
+        cy.get('#author').type('author')
+        cy.get('#url').type('url')
+        cy.get('#create-button').click()
+
+        cy.contains('The blog with the most likes').parent().within(() => {
+          cy.get('#view-button').click()
+          cy.get('#like-button').click()
+        })
+
+        cy.get('.blog').eq(0).should('contain', 'The blog with the most likes')
+        cy.get('.blog').eq(1).should('contain', 'The blog with the second most likes')
+
+      })
+    })
     describe('Blog deletion', function() {
       beforeEach(function() {
         
@@ -81,7 +113,7 @@ describe('Blog app', function() {
 
       })
     
-      it.only('Other users cannot see delete button for blogs added by different users', function() {
+      it('Other users cannot see delete button for blogs added by different users', function() {
         cy.contains('logout').click()
     
         cy.request('POST', 'http://localhost:3003/api/users', {
