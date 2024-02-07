@@ -31,7 +31,7 @@ test('renders the author, likes, url, and user after clicking on view', async ()
     id: '65bb85a2f1aab5ae904a84f0',
     username: 'tildatoi',
     password: '123456'
-  };
+  }
 
   render(<Blog blog={blog} user={testuser}/>)
 
@@ -44,4 +44,34 @@ test('renders the author, likes, url, and user after clicking on view', async ()
   expect(screen.getByText(`likes: ${blog.likes}`)).toBeDefined()
   expect(screen.getByText(`added by:`)).toBeDefined()
   
+})
+
+test('updates the likes of blog when clicking twice', async () => {
+  const blog = {
+    title: 'test blog',
+    author: 'test author',
+    url: 'test.fi',
+    user: '65bb85a2f1aab5ae904a84f0'
+  }
+
+  const testuser = {
+    id: '65bb85a2f1aab5ae904a84f0',
+    username: 'tildatoi',
+    password: '123456'
+  }
+
+  const mockHandler = jest.fn()
+
+  render(<Blog blog={blog} user={testuser} likeBlog={mockHandler}/>)
+
+  const user = userEvent.setup()
+  let button = screen.getByText('view')
+  await user.click(button)
+
+  button = screen.getByText('like')
+  await user.click(button)
+  await user.click(button)
+
+  expect(mockHandler.mock.calls).toHaveLength(2)
+
 })
