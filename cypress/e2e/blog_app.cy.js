@@ -36,7 +36,7 @@ describe('Blog app', function() {
         cy.get('#login-button').click()
       })
   
-      it.only('A blog can be created', function() {
+      it('A blog can be created', function() {
         cy.contains('new blog').click()
         cy.get('#title').type('blog')
         cy.get('#author').type('author')
@@ -44,6 +44,13 @@ describe('Blog app', function() {
         cy.get('#create-button').click()
 
         cy.contains('blog')
+      })
+
+      it.only('A blog can be liked', function() {
+        cy.get('#view-button').click()
+        cy.get('#like-button').click()
+        cy.contains('likes: 3')
+
       })
     })
   })

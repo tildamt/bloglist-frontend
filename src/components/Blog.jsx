@@ -16,14 +16,14 @@ const Blog = ({ blog, user, likeBlog, deleteBlog }) => {
       marginBottom: 5
     }}>
       <p>{blog.title}</p>
-      <button onClick={toggleDetails}>
+      <button id="view-button" onClick={toggleDetails}>
         {show ? 'hide' : 'view'}
       </button>
       {show && (
         <div>
           <p>author: {blog.author}</p>
           <p>url: {blog.url}</p>
-          <p>likes: {blog.likes}<button type="submit" onClick={() => likeBlog(blog.id)}>like</button></p>
+          <p>likes: {blog.likes}<button id="like-button" type="submit" onClick={() => likeBlog(blog.id)}>like</button></p>
           <p>added by: {blog.user.username}</p>
           {user.id === blog.user.id && (
             <p><button type="submit" onClick={() => deleteBlog(blog.id)}>delete</button></p>
