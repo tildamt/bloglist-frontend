@@ -8,7 +8,7 @@ const Blog = ({ blog, user, likeBlog, deleteBlog }) => {
   }
 
   return (
-    <div style={{
+    <div className={'blog'} style={{
       paddingTop: 10,
       paddingLeft: 2,
       border: 'solid',
